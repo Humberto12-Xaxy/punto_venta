@@ -23,7 +23,10 @@ class Sidebar(Container):
         self.app_layout = app_layout
         self.page = page
 
+        self.router = Router(self.page)
+
         self.nav_rail = NavigationRail(
+            bgcolor= '#497DAB',
             height=self.page.window.height,
             label_type=NAVIGATION_RAIL_SETTINGS['label_type'],
             selected_index=NAVIGATION_RAIL_SETTINGS['selected_index'],
@@ -41,14 +44,13 @@ class Sidebar(Container):
         )
     
     def on_change(self, e: ControlEvent):
-        router = Router(self.page)
 
         self.nav_rail.selected_index = e.control.selected_index
         if e.control.selected_index == 0:
-            self.app_layout.view.content = router.load_home()
+            self.app_layout.view.content = self.router.load_home()
         elif e.control.selected_index == 1:
-            self.app_layout.view.content = router.load_products()
+            self.app_layout.view.content = self.router.load_products()
         elif e.control.selected_index == 2:
-            self.app_layout.view.content = router.sales()
+            self.app_layout.view.content = self.router.sales()
         self.app_layout.update()
-        self.page.update()
+    

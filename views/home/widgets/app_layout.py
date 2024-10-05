@@ -12,7 +12,7 @@ from flet import (
 
 from .sidebar import Sidebar
 
-from sections.home.main import MainView
+from modules.home.main import MainView
 
 
 class AppLayout(Row):

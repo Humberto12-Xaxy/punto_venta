@@ -1,11 +1,21 @@
 
 
 class Product:
-    def __init__(self, name:str, price:float, stock:int, code:str):
+    def __init__(self, id:int = None, name:str = '', price:float = 0.0, stock:int = 0, code:str = ''):
+        self._id = id
         self._name = name
         self._price = price
         self._stock = stock
         self._code = code
+
+    
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, id:int):
+        self._id = id
 
     @property
     def name(self):

@@ -6,13 +6,13 @@ class EmployeeController:
         self._db = DatabaseConnection().connection("db.sqlite3")
     
     def get_all_employees(self):
-        cursor = self._db.cursor()
-        cursor.execute('SELECT * FROM employees')
-        employees = cursor.fetchall()
-        employees = [Employee(*employee) for employee in employees]
-        cursor.close()
-        self._db.close()
-        return employees
+        with self._db as db:
+            cursor = db.cursor()
+            cursor.execute('SELECT * FROM employees')
+            employees = cursor.fetchall()
+            employees = [Employee(*employee) for employee in employees]
+            cursor.close()
+            return employees
 
     def get_employee_by_id(self, id_employee:int):
         cursor = self._db.cursor()

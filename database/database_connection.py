@@ -13,7 +13,7 @@ class DatabaseConnection:
     def connection(self, db_name:str) -> Connection:
         if self._connection is None:
             try:
-                self._connection = sqlite3.connect(db_name)
+                self._connection = sqlite3.connect(db_name, check_same_thread=False)
                 print("Connection established")
             except sqlite3.Error as error:
                 print(error)

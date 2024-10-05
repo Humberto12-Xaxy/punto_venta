@@ -1,10 +1,19 @@
 class Employee:
 
-    def __init__(self, name:str, username:str, password:str, rol:str):
+    def __init__(self, name:str, username:str, password:str, rol:str, id:int = None):
+        self._id = id
         self._name = name
         self._username = username
         self._password = password
         self._rol = rol
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, id:int):
+        self._id = id
 
     @property
     def name(self):

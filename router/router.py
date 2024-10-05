@@ -1,8 +1,8 @@
 import flet as ft 
 
-from sections.home.main import MainView
-from sections.products.main import MainViewProducts
-
+from modules.home.main import MainView
+from modules.products.main import MainViewProducts
+from modules.sales.main import MainViewSales
 
 class Router:
     def __init__(self, page: ft.Page):
@@ -13,9 +13,9 @@ class Router:
         return home_view
     
     def load_products(self):
-        products_view = MainViewProducts()
+        products_view = MainViewProducts(self.page)
         return products_view
     
     def sales(self):
-        sales_view = ft.Column()
+        sales_view = MainViewSales(self.page)
         return sales_view
