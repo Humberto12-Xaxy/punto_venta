@@ -16,6 +16,11 @@ LIST_DESTINATIONS = [
         icon=ft.icons.ATTACH_MONEY,
         selected_icon=ft.icons.ATTACH_MONEY,
     ),
+    ft.NavigationRailDestination(
+        label_content=ft.Text('Empleados'),
+        icon=ft.icons.PERSON,
+        selected_icon=ft.icons.PERSON,
+    ),
 ]
 
 LEADING = ft.FloatingActionButton(

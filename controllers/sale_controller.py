@@ -31,6 +31,11 @@ class SaleController:
     def add_sale(self, date: str, total: int, id_employee: int) -> int:
         with self._db as db:
             cursor = db.cursor()
+            cursor.execute('SELECT id FROM employees WHERE id = ?', (id_employee,))
+            employee = cursor.fetchone()
+            if not employee:
+                return False
+            
             cursor.execute('INSERT INTO sales VALUES (?,?,?,?)',
                         (None, date, total, id_employee))
             id_sale = cursor.lastrowid

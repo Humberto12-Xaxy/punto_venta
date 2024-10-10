@@ -16,7 +16,7 @@ class MainViewProducts(Container):
 
         self.page = page
         self.bgcolor = 'white'
-        self.width = page.window.width * 0.8
+        self.width = page.window.width * 0.85
         self.height = page.window.height
 
         self.table = TableWidget(page)

@@ -52,5 +52,7 @@ class Sidebar(Container):
             self.app_layout.view.content = self.router.load_products()
         elif e.control.selected_index == 2:
             self.app_layout.view.content = self.router.sales()
+        elif e.control.selected_index == 3:
+            self.app_layout.view.content = self.router.employees()
         self.app_layout.update()
     

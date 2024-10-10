@@ -28,7 +28,7 @@ class MainView(Container):
         # init table
         self.table = TableWidget(self.page)
 
-        self.width = page.window.width * 0.8
+        self.width = page.window.width * 0.85
         self.height = page.window.height
         self.padding = 20
         self.bgcolor = 'white'
