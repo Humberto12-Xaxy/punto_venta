@@ -23,13 +23,13 @@ COLUMN_NAMES = [
 ]
 
 
-def LIST_CELL_ACTIONS(id_product:int, product_controller: ProductController, page: Page) -> list:
+def LIST_CELL_ACTIONS(id_product:int, product_controller: ProductController, page: Page, table) -> list:
 
     list_cell_actions = [
         PopupMenuItem(
             content=Text('Edit'),
             icon=icons.EDIT,
-            on_click=lambda _: _update_products(page, product_controller.get_product_by_id(id_product)),
+            on_click=lambda _: _update_products(page, product_controller.get_product_by_id(id_product), table),
         ),
         PopupMenuItem(
             content=Text('Delete'),
@@ -41,6 +41,6 @@ def LIST_CELL_ACTIONS(id_product:int, product_controller: ProductController, pag
     return list_cell_actions
 
 
-def _update_products(page: Page, product: Product):
-    modal = ModalWidget(page, product= product)
+def _update_products(page: Page, product: Product, table):
+    modal = ModalWidget(page, product= product, table=table)
     page.open(modal)

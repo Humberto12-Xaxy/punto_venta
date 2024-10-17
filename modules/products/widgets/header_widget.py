@@ -38,7 +38,7 @@ class HeaderWidget(Row):
         self.controller = ProductController()
         self.alignment = MainAxisAlignment.END
 
-        self.modal = ModalWidget(page)
+        self.modal = ModalWidget(page, table, pagination)
         self.table = table
 
         self.file_picker = FilePicker(

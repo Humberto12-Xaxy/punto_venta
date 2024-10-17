@@ -13,7 +13,6 @@ from utils.products.table_utils import (
     LIST_CELL_ACTIONS
 )
 
-from models.data_product import data_product
 from models.product import Product
 
 
@@ -31,6 +30,7 @@ class TableWidget(DataTable):
 
     def load_products(self):
         try:
+            self.rows.clear()
             product_controller = ProductController()
             # Cargar productos nuevamente para evitar datos obsoletos
             for product in product_controller.get_all_products():
@@ -44,7 +44,7 @@ class TableWidget(DataTable):
                             DataCell(Text(product.code, color='black')),
                             DataCell(
                                 content=PopupMenuButton(
-                                    items=LIST_CELL_ACTIONS(product.id, product_controller, self.page),
+                                    items=LIST_CELL_ACTIONS(product.id, product_controller, self.page, self),
                                     tooltip= 'Mostrar opciones',
                                     )
                             ),
@@ -52,7 +52,6 @@ class TableWidget(DataTable):
                     )
                 )
         except Exception as e:
-            print(e)
             self.page.snack_bar = SnackBar(
                 content=Text(
                     f'Error: No se pudo cargar los productos.', color='white'),
@@ -77,7 +76,7 @@ class TableWidget(DataTable):
                         DataCell(Text(product.code, color='black')),
                         DataCell(
                             content=PopupMenuButton(
-                                items=LIST_CELL_ACTIONS(product.id, product_controller, self.page),
+                                items=LIST_CELL_ACTIONS(product.id, product_controller, self.page, self),
                                 tooltip= 'Mostrar opciones',
                                 )
                         ),

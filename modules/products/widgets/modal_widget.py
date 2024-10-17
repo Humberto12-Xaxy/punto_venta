@@ -17,14 +17,19 @@ from models.product import Product
 
 from controllers.product_controller import ProductController
 
+from widgets.dt_pagination import DataTablePagination
+
 class ModalWidget(AlertDialog):
 
-    def __init__(self, page: Page, product: Product = None ):
+    def __init__(self, page: Page, table, pagination: DataTablePagination = None, product: Product = None ):
         super().__init__()
 
         self.page = page
         self.modal = True
         self.title = Text('Añadir producto', color='black')
+
+        self.pagination = pagination
+        self.table = table
 
         self.bgcolor = 'white'
 
@@ -124,6 +129,9 @@ class ModalWidget(AlertDialog):
             if product_controller:
                 product_controller.add_product(**product)
                 self.page.close(self)
+                self.table.load_products()
+                self.pagination.data_rows = self.table.rows
+                self.table.load_products()
 
             else:
                 self.page.snack_bar = SnackBar(content=Text('No se pudo añadir el producto'))

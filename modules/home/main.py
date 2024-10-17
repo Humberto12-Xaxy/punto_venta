@@ -21,12 +21,13 @@ class MainView(Container):
 
         self.page = page
 
-        self.modal = ModalWidgetHome(self.page, 0, 0)
 
         self.footer = FooterWidget(self.page, 0)
 
         # init table
         self.table = TableWidget(self.page)
+        
+        self.modal = ModalWidgetHome(self.page, 0, 0, self.table)
 
         self.width = page.window.width 
         self.height = page.window.height

@@ -20,13 +20,18 @@ from models.employee import Employee
 
 from controllers.employee_controller import EmployeeController
 
+from widgets.dt_pagination import DataTablePagination
+
 class ModalWidget(AlertDialog):
-    def __init__(self, page: Page, table, employee:Employee= None):
+    def __init__(self, page: Page, table, table_pagination: DataTablePagination = None, employee:Employee= None):
         super().__init__()
 
         self.page = page
         self.modal = True
 
+        self.employee_controller = EmployeeController()
+
+        self.table_pagination = table_pagination
         self.table = table
 
         self.title = Text('Registrar usuario', color='black')
@@ -57,7 +62,7 @@ class ModalWidget(AlertDialog):
                     width= self.page.width * 0.2,
                     label= 'Contraseña',
                     color= 'black',
-                    value= employee.username if employee else '',
+                    value= employee.password.decode() if employee else '',
                 ),
                 Dropdown(
                     width= self.page.width * 0.2,
@@ -77,7 +82,7 @@ class ModalWidget(AlertDialog):
             TextButton(
                 'Registrar' if not employee else 'Actualizar',
                 style= ButtonStyle(color='green'),
-                on_click= self.register_user if not employee else print('actualizar')
+                on_click= self.register_user if not employee else self.update_user
             ),
             TextButton(
                 'Cancelar',
@@ -109,11 +114,12 @@ class ModalWidget(AlertDialog):
                 'rol': role
             }
             
-            employee_controller = EmployeeController()
 
-            if employee_controller.add_employee(employee['name'], employee['username'], employee['password'], employee['rol']):
+            if self.employee_controller.add_employee(employee['name'], employee['username'], employee['password'], employee['rol']):
                 self.page.close(self)
-                self.table.load_employees()
+                self.table.load_rows()
+                self.table_pagination.data_rows = self.table.rows
+                self.table_pagination.build_rows()
                 self.page.snack_bar = SnackBar(
                     Text('Usuario registrado exitosamente', color='white'),
                     bgcolor= 'green'
@@ -129,3 +135,40 @@ class ModalWidget(AlertDialog):
                 self.page.snack_bar.open = True
                 self.page.update()
 
+    def update_user(self, e: ControlEvent):
+
+        name = self.content.controls[0].value
+        username = self.content.controls[1].value
+        password:str = self.content.controls[2].value
+        role = self.content.controls[3].value
+
+        if name != '' and password != '' and username != '' and role != '':
+
+            pwd = password.encode('utf-8')
+            salt = bcrypt.gensalt()
+            hashed = bcrypt.hashpw(pwd, salt)
+
+            employee = {
+                'id_employee': self.employee.id,
+                'name': name,
+                'username': username,
+                'password': hashed,
+                'rol': role
+            }
+
+            if self.employee_controller.update_employee(employee['id_employee'], employee['name'], employee['username'], employee['password'], employee['rol']):
+                self.page.close(self)
+                self.page.snack_bar = SnackBar(
+                    Text('Usuario actualizado exitosamente', color='white'),
+                    bgcolor= 'green'
+                )
+                self.page.snack_bar.open = True
+                self.page.update()
+            
+            else:
+                self.page.snack_bar = SnackBar(
+                    Text('Hubo un error al actualizar el usuario', color='white'),
+                    bgcolor= 'red'
+                )
+                self.page.snack_bar.open = True
+                self.page.update()

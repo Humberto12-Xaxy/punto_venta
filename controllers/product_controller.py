@@ -55,16 +55,16 @@ class ProductController:
             return Product(*product)
         
     def update_product(self, id_product:int, name:str, price:float, stock:int, code:str):
-        cursor = self._db.cursor()
-        cursor.execute('SELECT * FROM products WHERE id = ?', (id_product,))
-        product = cursor.fetchone()
-        if not product:
-            return False
-        cursor.execute('UPDATE products SET name = ?, price = ?, stock = ?, code = ? WHERE id = ?', (name, price, stock, code, id_product))
-        self._db.commit()
-        cursor.close()
-        self._db.close()
-        return True
+        with self._db as db:
+            cursor = db.cursor()
+            cursor.execute('SELECT * FROM products WHERE id = ?', (id_product,))
+            product = cursor.fetchone()
+            if not product:
+                return False
+            cursor.execute('UPDATE products SET name = ?, price = ?, stock = ?, code = ? WHERE id = ?', (name, price, stock, code, id_product))
+            db.commit()
+            cursor.close()
+            return True
 
     def update_stock(self, id_product:int, stock:int):
         with self._db as db:

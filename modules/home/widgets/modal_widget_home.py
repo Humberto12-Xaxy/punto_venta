@@ -24,12 +24,14 @@ from models.data_shop import data_shop
 
 
 class ModalWidgetHome(AlertDialog):
-    def __init__(self, page: Page, total: float, change: float):
+    def __init__(self, page: Page, total: float, change: float, table):
         super().__init__()
 
         self.page = page
         self.modal = True
         self.title = Text('Venta', color='black')
+
+        self.table = table
 
         self.bgcolor = 'white'
 
@@ -128,7 +130,7 @@ class ModalWidgetHome(AlertDialog):
 
         date = datetime.now().strftime('%Y-%m-%d %H:%M')
 
-        id_sale = sale_controller.add_sale(date, self.subtotal, 2)
+        id_sale = sale_controller.add_sale(date, self.subtotal, 4)
 
         for product in data_shop.get_list_products():
             controller.update_stock(product.id, product.stock - product.count)
@@ -136,4 +138,5 @@ class ModalWidgetHome(AlertDialog):
 
         self.content.controls[1].focus()
         self.page.update()
+        self.table.rows.clear()
         self.close(e)

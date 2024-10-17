@@ -12,13 +12,15 @@ from flet import (
 
 from .modal_widget import ModalWidget
 
+from widgets.dt_pagination import DataTablePagination
+
 
 class HeaderWidget(Row):
-    def __init__(self, page: Page, table):
+    def __init__(self, page: Page, table_pagination: DataTablePagination, table):
         super().__init__()
 
         self.page = page
-        self.modal = ModalWidget(page, table)
+        self.modal = ModalWidget(page, table_pagination = table_pagination, table = table)
 
         self.width = page.window.width
         self.alignment = MainAxisAlignment.END
