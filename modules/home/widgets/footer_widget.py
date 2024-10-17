@@ -20,6 +20,7 @@ class FooterWidget(Row):
         self.width = page.window.width * 0.8
         self.height = 100
         self.bgcolor = 'grey'
+        self.expand = True
 
         self.alignment = MainAxisAlignment.SPACE_EVENLY
 

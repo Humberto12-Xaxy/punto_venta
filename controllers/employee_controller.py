@@ -15,41 +15,41 @@ class EmployeeController:
             return employees
 
     def get_employee_by_id(self, id_employee:int):
-        cursor = self._db.cursor()
-        cursor.execute('SELECT * FROM employees WHERE id = ?', (id_employee,))
-        employee = cursor.fetchone()
-        cursor.close()
-        self._db.close()
-        return Employee(*employee)
+        with self._db as db:
+            cursor = db.cursor()
+            cursor.execute('SELECT * FROM employees WHERE id = ?', (id_employee,))
+            employee = cursor.fetchone()
+            cursor.close()
+            return Employee(*employee)
 
     def add_employee(self, name:str, username:str, password:str, rol:str):
-        cursor = self._db.cursor()
-        cursor.execute('INSERT INTO employees VALUES (?,?,?,?,?)', (None, name, username, password, rol))
-        self._db.commit()
-        cursor.close()
-        self._db.close()
-        return True
+        with self._db as db:
+            cursor = db.cursor()
+            cursor.execute('INSERT INTO employees VALUES (?,?,?,?,?)', (None, name, username, password, rol))
+            self._db.commit()
+            cursor.close()
+            return True
 
     def update_employee(self, id_employee:int, name:str, username:str, password:str, rol:str):
-        cursor = self._db.cursor()
-        cursor.execute('SELECT * FROM employees WHERE id = ?', (id_employee,))
-        employee = cursor.fetchone()
-        if not employee:
-            return False
-        cursor.execute('UPDATE employees SET name = ?, username = ?, password = ?, rol = ? WHERE id = ?', (name, username, password, rol, id_employee))
-        self._db.commit()
-        cursor.close()
-        self._db.close()
-        return True
+        with self._db as db:
+            cursor = db.cursor()
+            cursor.execute('SELECT * FROM employees WHERE id = ?', (id_employee,))
+            employee = cursor.fetchone()
+            if not employee:
+                return False
+            cursor.execute('UPDATE employees SET name = ?, username = ?, password = ?, rol = ? WHERE id = ?', (name, username, password, rol, id_employee))
+            self._db.commit()
+            cursor.close()
+            return True
     
     def delete_employee(self, id_employee:int):
-        cursor = self._db.cursor()
-        cursor.execute('SELECT * FROM employees WHERE id = ?', (id_employee,))
-        employee = cursor.fetchone()
-        if not employee:
-            return False
-        cursor.execute('DELETE FROM employees WHERE id = ?', (id_employee,))
-        self._db.commit()
-        cursor.close()
-        self._db.close()
-        return True
+        with self._db as db:
+            cursor = db.cursor()
+            cursor.execute('SELECT * FROM employees WHERE id = ?', (id_employee,))
+            employee = cursor.fetchone()
+            if not employee:
+                return False
+            cursor.execute('DELETE FROM employees WHERE id = ?', (id_employee,))
+            self._db.commit()
+            cursor.close()
+            return True

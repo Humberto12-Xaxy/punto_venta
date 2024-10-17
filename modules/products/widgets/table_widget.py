@@ -1,6 +1,5 @@
 from flet import (
     DataTable,
-    DataColumn,
     DataRow,
     DataCell,
     Page,
@@ -29,9 +28,6 @@ class TableWidget(DataTable):
         self.page = page
 
         self.load_products()
-
-        self.width = page.window.width * 0.7
-        self.height = page.window.height * 0.8
 
     def load_products(self):
         try:

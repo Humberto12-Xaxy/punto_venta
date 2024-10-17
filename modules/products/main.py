@@ -16,10 +16,11 @@ class MainViewProducts(Container):
 
         self.page = page
         self.bgcolor = 'white'
-        self.width = page.window.width * 0.85
+        self.width = page.window.width 
         self.height = page.window.height
 
         self.table = TableWidget(page)
+        self.expand = True
 
         self.table_pagination = DataTablePagination(page, self.table)
         self.content = Column(

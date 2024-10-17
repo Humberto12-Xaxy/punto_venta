@@ -1,6 +1,6 @@
 class Employee:
 
-    def __init__(self, name:str, username:str, password:str, rol:str, id:int = None):
+    def __init__(self, id:int, name:str, username:str, password:str, rol:str):
         self._id = id
         self._name = name
         self._username = username
@@ -47,4 +47,4 @@ class Employee:
         self._rol = rol
     
     def __str__(self):
-        return f"Name: {self._name}, Username: {self._username}, Password: {self._password}, Rol: {self._rol}"
+        return f"Id: {self._id}, Name: {self._name}, Username: {self._username}, Password: {self._password}, Rol: {self._rol}"

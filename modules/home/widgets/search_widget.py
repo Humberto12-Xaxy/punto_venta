@@ -27,9 +27,10 @@ class SeachWidget(Row):
         self.footer = footer
         self.product_controller = ProductController()
 
-        self.width = page.window.width * 0.8
+        self.width = page.window.width
         self.height = 40
         self.alignment = 'end'
+        self.expand = True
 
         self.controls = [
             TextField(

@@ -18,12 +18,10 @@ from flet import (
 
 class DataTablePagination(Container):
 
-    DEFAULT_ROW_PER_PAGE = 10
+    DEFAULT_ROW_PER_PAGE = 9
 
     def __init__(self, page: Page, data_table: DataTable, rows_per_page: int = DEFAULT_ROW_PER_PAGE):
         super().__init__()
-    
-        self.width = page.window.width * 0.8
 
         self.data_table = data_table
         self.rows_per_page = rows_per_page
@@ -52,6 +50,7 @@ class DataTablePagination(Container):
 
         self.content = Column(
             horizontal_alignment='center',
+            expand=True,
             controls=[
                 self.pdt,
                 Row(
@@ -63,14 +62,14 @@ class DataTablePagination(Container):
                                     icon_color='#495B6B' if self.num_pages == 1 and self.current_page == 1 else colors.GREY_500,
                                     on_click=self.goto_first_page,
                                     tooltip='First page',
-                                    disabled= False if self.num_pages == 1 and self.current_page == 1 else True
+                                    disabled=False if self.num_pages == 1 and self.current_page == 1 else True
                                 ),
                                 IconButton(
                                     icon=icons.ARROW_LEFT,
                                     on_click=self.previous_page,
                                     icon_color='#495B6B'if self.num_pages == 1 and self.current_page == 1 else colors.GREY_500,
                                     tooltip='Previous page',
-                                    disabled= False if self.num_pages == 1 and self.current_page == 1 else True
+                                    disabled=False if self.num_pages == 1 and self.current_page == 1 else True
                                 ),
                                 self.v_current_page,
                                 IconButton(
@@ -85,7 +84,7 @@ class DataTablePagination(Container):
                                     on_click=self.goto_last_page,
                                     icon_color='#495B6B',
                                     tooltip='Last page',
-                                    disabled= self.num_pages == 1
+                                    disabled=self.num_pages == 1
                                 ),
                             ]
                         ),
@@ -107,7 +106,7 @@ class DataTablePagination(Container):
     @property
     def data_rows(self) -> list[DataRow]:
         return self.pdt.rows
-    
+
     @data_rows.setter
     def data_rows(self, rows: list[DataRow]):
         self.pdt.rows = rows
@@ -134,7 +133,7 @@ class DataTablePagination(Container):
             self.content.controls[1].controls[0].controls[3].icon_color = '#495B6B'
             self.content.controls[1].controls[0].controls[4].disabled = False
             self.content.controls[1].controls[0].controls[4].icon_color = '#495B6B'
-        
+
         self.refresh_data()
         self.build_rows()
 
@@ -155,7 +154,7 @@ class DataTablePagination(Container):
     def next_page(self, e: ControlEvent):
         if self.current_page < self.num_pages:
             self.set_page(delta=1)
-        
+
             if self.current_page == self.num_pages:
                 self.content.controls[1].controls[0].controls[0].disabled = False
                 self.content.controls[1].controls[0].controls[0].icon_color = '#495B6B'
@@ -166,6 +165,7 @@ class DataTablePagination(Container):
                 self.content.controls[1].controls[0].controls[4].disabled = True
                 self.content.controls[1].controls[0].controls[4].icon_color = colors.GREY_500
             self.update()
+
     def previous_page(self, e: ControlEvent):
         if self.current_page > 1:
             self.set_page(delta=-1)
@@ -209,6 +209,3 @@ class DataTablePagination(Container):
 
     def did_mount(self):
         self.refresh_data()
-
-
-    

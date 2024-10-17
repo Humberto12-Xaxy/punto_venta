@@ -23,9 +23,9 @@ class AppLayout(Row):
         self.page = page
         self.view = MainView(self.page)
 
+        self.expand = True
+
         self.controls = [
             Sidebar(self, self.page),
             self.view
         ]
-
-        self.expand = True

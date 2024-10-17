@@ -5,6 +5,9 @@ from flet import (
     Text
 )
 
+from .widgets.header_widget import HeaderWidget
+from .widgets.table_widget import TableWidget
+
 class MainViewEmployees(Container):
 
     def __init__(self, page: Page):
@@ -14,11 +17,15 @@ class MainViewEmployees(Container):
 
         self.bgcolor = 'white'
 
-        self.width = page.window.width * 0.85
+        self.width = page.window.width
+        self.height = page.window.height
+
+        self.table = TableWidget(self.page)
 
         self.content = Column(
             horizontal_alignment='center',
             controls=[
-                Text('Empleados')
+                HeaderWidget(self.page, self.table),
+                self.table
             ]
         )

@@ -28,12 +28,12 @@ class MainView(Container):
         # init table
         self.table = TableWidget(self.page)
 
-        self.width = page.window.width * 0.85
+        self.width = page.window.width 
         self.height = page.window.height
-        self.padding = 20
+        self.padding = 10
         self.bgcolor = 'white'
+        self.expand = True
         self.content = Column(
-            horizontal_alignment='center',
             alignment= MainAxisAlignment.SPACE_BETWEEN,
             controls=[
                 SeachWidget(page, self.table, self.footer),

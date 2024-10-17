@@ -19,7 +19,7 @@ class MainViewSales(Container):
         
         self.page = page
         self.bgcolor = 'white'
-        self.width = page.window.width * 0.85
+        self.width = page.window.width
         self.height = page.window.height
         self.modal = ModalWidgetSale(self.page)
         self.table = TableWidget(page, self.modal)
