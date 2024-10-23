@@ -2,7 +2,11 @@ import flet
 from flet import *
 
 from database.create_table import create_table
+
 from views.home.widgets.app_layout import AppLayout
+from views.login.login import Login
+
+
 from utils.main.app_bar_menu_actions import LIST_MENU_ACTIONS
 
 from controllers.employee_controller import EmployeeController
@@ -19,6 +23,7 @@ def main(page: Page):
     page.window.resizable = False
 
     page.appbar = AppBar(
+        visible= False,
         bgcolor= '#2A91EB',
         leading=Icon(icons.SHOPPING_CART, color="white"),
         title=Text("Punto de Venta"),
@@ -30,7 +35,7 @@ def main(page: Page):
         ]
     )
 
-    page.add(AppLayout(page))
+    page.add(Login(page))
 
-
-flet.app(target=main)
+if __name__ == '__main__':
+    flet.app(target=main)

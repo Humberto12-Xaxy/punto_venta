@@ -46,3 +46,22 @@ class TableWidget(DataTable):
                         tooltip='Actualizar | Eliminar',
                     )),
                 ]))
+
+        self.page.update()
+            
+    def update_table(self, list_employees: list[Employee]):
+        self.rows.clear()
+        for employee in list_employees:
+            self.rows.append(
+                DataRow(cells=[
+                    DataCell(Text(employee.name, color='black')),
+                    DataCell(Text(employee.username, color='black')),
+                    DataCell(Text(employee.rol, color='black')),
+                    DataCell(
+                        content=PopupMenuButton(
+                            items = LIST_CELL_ACTIONS(employee.id, self.employee_controller, self.page, self),
+                        tooltip='Actualizar | Eliminar',
+                    )),
+                ]))
+            
+        self.page.update()

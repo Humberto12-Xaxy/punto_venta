@@ -139,4 +139,5 @@ class ModalWidgetHome(AlertDialog):
         self.content.controls[1].focus()
         self.page.update()
         self.table.rows.clear()
+        data_shop.clear_products()
         self.close(e)

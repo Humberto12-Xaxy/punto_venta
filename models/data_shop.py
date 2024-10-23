@@ -26,5 +26,8 @@ class DataShop:
 
     def pop_product(self):
         self.list_products.pop()
+    
+    def clear_products(self):
+        self.list_products.clear()
 
 data_shop = DataShop()
