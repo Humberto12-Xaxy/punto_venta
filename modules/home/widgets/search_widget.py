@@ -30,7 +30,6 @@ class SeachWidget(Row):
         self.width = page.window.width
         self.height = 40
         self.alignment = 'end'
-        self.expand = True
 
         self.controls = [
             TextField(

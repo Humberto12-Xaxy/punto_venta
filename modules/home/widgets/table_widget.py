@@ -23,7 +23,7 @@ class TableWidget(DataTable):
         )
         self.vertical_lines = BorderSide(.3, 'black')
         self.width = page.window.width * 0.7
-        self.height = page.window.height * 0.5
+        self.height = page.window.height * 0.55
         self.page = page
 
     

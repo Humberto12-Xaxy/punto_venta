@@ -26,7 +26,6 @@ class FooterWidget(Row):
 
         self.controls = [
             self.total(),
-            self.sale()
         ]
 
     def total(self):
@@ -40,16 +39,6 @@ class FooterWidget(Row):
             border_radius= 50
         )
 
-    def sale(self):
-        return ElevatedButton(
-            width=300,
-            height=80, 
-            content=Text('Vender'),
-            color= 'white',
-            bgcolor='#495B6B',
-            on_click=lambda _: print(_)
-        )
-    
     def update_total(self, subtotal: float):
         self.subtotal = subtotal
 

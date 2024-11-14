@@ -27,7 +27,7 @@ class EmployeeController:
     def get_employee_by_username(self, username:str):
         with self._db as db:
             cursor = db.cursor()
-            cursor.execute('SELECT password FROM employees WHERE username = ?', (username,))
+            cursor.execute('SELECT * FROM employees WHERE username = ?', (username,))
             password = cursor.fetchone()
             cursor.close()
             return password

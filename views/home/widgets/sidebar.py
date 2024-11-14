@@ -12,7 +12,7 @@ from flet import (
     ControlEvent
     )
 
-from utils.main.navigation_rail_setting import NAVIGATION_RAIL_SETTINGS
+from utils.main.navigation_rail_setting import NAVIGATION_RAIL_SETTINGS, create_navigation_rail
 from router.router import Router
 
 class Sidebar(Container):
@@ -24,13 +24,15 @@ class Sidebar(Container):
         self.page = page
 
         self.router = Router(self.page)
+        
+        print('privileges', self.page.client_storage.get('privileges'))
 
         self.nav_rail = NavigationRail(
             bgcolor= '#497DAB',
             height=self.page.window.height,
             label_type=NAVIGATION_RAIL_SETTINGS['label_type'],
             selected_index=NAVIGATION_RAIL_SETTINGS['selected_index'],
-            destinations=NAVIGATION_RAIL_SETTINGS['destinations'],
+            destinations= create_navigation_rail(self.page),
             extended=True,
             expand=True,
             on_change= self.on_change
@@ -42,6 +44,7 @@ class Sidebar(Container):
             ],
             tight= True
         )
+
     
     def on_change(self, e: ControlEvent):
 

@@ -3,10 +3,12 @@ from flet import (
     TextField,
     Text,
     Column,
+    Row,
     Container,
     ElevatedButton,
     MainAxisAlignment,
-    CrossAxisAlignment
+    CrossAxisAlignment,
+    TextStyle
 )
 
 from bcrypt import checkpw
@@ -16,56 +18,74 @@ from controllers.employee_controller import EmployeeController
 from models.employee import Employee
 
 
-class Login(Container):
+class Login(Row):
     def __init__(self, page: Page):
         super().__init__()
         self.page = page
 
-        self.expand = True
-        self.width = page.window.width
-        self.height = page.window.height
-
         self.bgcolor = 'white'
         self.employee_controller = EmployeeController()
 
-        self.content = Column(
-            [
-                Text(
-                    'Login',
-                    color='black',
-                    size=30
-                ),
-                TextField(
-                    width=300,
-                    label='Username',
-                    autofocus=True,
-                    color='black'
-                ),
-                TextField(
-                    width=300,
-                    label='Password',
-                    password=True,
-                    color='black'
-                ),
-                ElevatedButton(
-                    'Iniciar sesión',
-                    on_click=self.login
+        self.expand = True
+
+        self.controls = [
+            Container(
+                bgcolor='white',
+                expand=True,
+                content=Column(
+                    [
+                        Text(
+                            'Login',
+                            color='black',
+                            size=30
+                        ),
+                        TextField(
+                            width=300,
+                            label='Username',
+                            label_style=TextStyle(color='gray'),
+                            autofocus=True,
+                            color='black'
+                        ),
+                        TextField(
+                            width=300,
+                            label='Password',
+                            label_style=TextStyle(color='gray'),   
+                            password=True,
+                            color='black',
+                            can_reveal_password=True
+                        ),
+                        ElevatedButton(
+                            'Iniciar sesión',
+                            width=200,
+                            height=50,
+                            on_click=self.login
+                        )
+                    ],
+                    alignment=MainAxisAlignment.CENTER,
+                    horizontal_alignment=CrossAxisAlignment.CENTER,
+                    width=page.window.width,
+                    height=page.window.height
                 )
-            ],
-            alignment=MainAxisAlignment.CENTER,
-            horizontal_alignment= CrossAxisAlignment.CENTER
-        )
+
+            )
+
+        ]
 
     def login(self, e):
 
-        username = self.content.controls[1].value
-        user_password = self.content.controls[2].value
+        username = self.controls[0].content.controls[1].value
+        user_password = self.controls[0].content.controls[2].value
 
-        password = self.employee_controller.get_employee_by_username(username)
+        user = self.employee_controller.get_employee_by_username(username)
 
-        if password:
-            password = password[0]
+        if user:
+            password = user[3]
             user_password = bytes(user_password, 'utf-8')
-            if checkpw(password, password):
-                print('Login correcto')
-
+            if checkpw(user_password, password):
+                self.page.client_storage.set('privileges', user[4])
+                print(self.page.client_storage.get('privileges'))
+                self.page.go('/main')
+            else:
+                print('Username o password incorrectos')
+        else:
+            print('Username o password incorrectos')

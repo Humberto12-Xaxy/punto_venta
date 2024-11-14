@@ -62,6 +62,8 @@ class ModalWidget(AlertDialog):
                     width= self.page.width * 0.2,
                     label= 'Contraseña',
                     color= 'black',
+                    password= True,
+                    can_reveal_password= True,
                     value= employee.password.decode() if employee else '',
                 ),
                 Dropdown(
